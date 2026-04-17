@@ -1,1 +1,305 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>$BARK Website</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 0;\n            background-color: #111;\n            color: #fff;\n            animation: glow 1.5s infinite alternate;\n        }\n        @keyframes glow {\n            from { background-color: #1a1a1a; }\n            to { background-color: #333; }\n        }\n        .bark-blue {\n            color: #007BFF;\n        }\n        .bark-purple {\n            color: #6F42C1;\n        }\n        .hero {\n            text-align: center;\n            padding: 50px;\n        }\n        .tokenomics, .roadmap, .cta {\n            padding: 20px;\n            margin: 20px;\n        }\n    </style>\n</head>\n<body>\n    <div class="hero">\n        <h1 class="bark-blue">The Loudest Dog in the Yard</h1>\n    </div>\n    <div class="tokenomics">\n        <h2>Tokenomics</h2>\n        <p>60% Public Launch</p>\n        <p>20% Marketing Distribution</p>\n        <p>3% Transaction Tax Breakdown</p>\n    </div>\n    <div class="roadmap">\n        <h2>Roadmap</h2>\n        <ul>\n            <li>Puppy Stage</li>\n            <li>Zoomies</li>\n            <li>The Big Bark</li>\n        </ul>\n    </div>\n    <div class="cta">\n        <h2>Join Us Now!</h2>\n        <button>Get Started</button>\n    </div>\n    <footer>\n        <div>\n            <a href="https://social-link1.com">Social 1</a> | \n            <a href="https://social-link2.com">Social 2</a>\n        </div>\n    </footer>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$BARK - The Loudest Dog in the Yard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bark-blue': '#0ea5e9',
+                        'bark-dark': '#0f172a',
+                        'bark-purple': '#7c3aed',
+                        'bark-glow': '#0ea5e9'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 10px #0ea5e9' },
+                            '100%': { boxShadow: '0 0 30px #0ea5e9, 0 0 60px #7c3aed' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-bark {
+                background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0ea5e9 100%);
+            }
+            .glow-effect {
+                filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
+            }
+            .floating-element {
+                animation: float 8s ease-in-out infinite;
+            }
+            .background-grid {
+                background-image: 
+                    linear-gradient(rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
+                background-size: 30px 30px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-bark-dark text-white min-h-screen overflow-x-hidden">
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-bark-glow rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element animate-bounce"></div>
+        <div class="absolute top-1/3 right-1/4 w-72 h-72 bg-bark-purple rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element animate-pulse"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-bark-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="relative z-10 bg-bark-dark/80 backdrop-blur-md border-b border-bark-blue/30 sticky top-0">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-paw text-bark-blue text-2xl"></i>
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <button class="hover:text-bark-blue transition-colors duration-300">Home</button>
+                <button class="hover:text-bark-blue transition-colors duration-300">Whitepaper</button>
+                <button class="hover:text-bark-blue transition-colors duration-300">Tokenomics</button>
+                <button class="hover:text-bark-blue transition-colors duration-300">Roadmap</button>
+                <button class="hover:text-bark-blue transition-colors duration-300">Team</button>
+            </div>
+            <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+                Buy $BARK
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 pt-20 pb-32">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    The <span class="bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">Loudest</span> Dog in the Yard
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    $BARK - Where Every Transaction Barks, Every Meme Roars, and Every Dog Gets a Voice!
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                    <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+                        <i class="fas fa-paw mr-2"></i> Get $BARK Now
+                    </button>
+                    <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300">
+                        <i class="fas fa-file-alt mr-2"></i> Read Whitepaper
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                        <i class="fas fa-volume-up text-4xl text-bark-blue mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Maximum Volume</h3>
+                        <p class="text-gray-400">We're all about making noise, not hiding behind silence.</p>
+                    </div>
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                        <i class="fas fa-burn text-4xl text-bark-purple mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Perpetual Growth</h3>
+                        <p class="text-gray-400">Burned tokens ensure scarcity and long-term value.</p>
+                    </div>
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                        <i class="fas fa-users text-4xl text-bark-blue mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Community Focused</h3>
+                        <p class="text-gray-400">Built for the community, by the community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section class="relative z-10 py-20 bg-gradient-bark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Tokenomics</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Transparent distribution designed for maximum impact</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div>
+                                    <span>Public Launch (60%)</span>
+                                </div>
+                                <span class="font-bold">600,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-bark-purple rounded-full mr-3"></div>
+                                    <span>Marketing & Hype (20%)</span>
+                                </div>
+                                <span class="font-bold">200,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-blue-400 rounded-full mr-3"></div>
+                                    <span>The Dog Park (10%)</span>
+                                </div>
+                                <span class="font-bold">100,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-purple-400 rounded-full mr-3"></div>
+                                    <span>Dev Kennel (5%)</span>
+                                </div>
+                                <span class="font-bold">50,000,000</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div>
+                                    <span>Charity – Animal Shelters (5%)</span>
+                                </div>
+                                <span class="font-bold">50,000,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-8 rounded-xl border border-bark-blue/30 text-center">
+                        <h3 class="text-2xl font-bold mb-4">3% Transaction Tax</h3>
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="p-4 bg-bark-blue/20 rounded-lg">
+                                <div class="text-3xl font-bold mb-2">1%</div>
+                                <div class="text-sm">Burn</div>
+                            </div>
+                            <div class="p-4 bg-bark-purple/20 rounded-lg">
+                                <div class="text-3xl font-bold mb-2">1%</div>
+                                <div class="text-sm">Liquidity</div>
+                            </div>
+                            <div class="p-4 bg-blue-400/20 rounded-lg">
+                                <div class="text-3xl font-bold mb-2">1%</div>
+                                <div class="text-sm">Marketing</div>
+                            </div>
+                        </div>
+                        <div class="text-lg font-semibold">
+                            Total Supply: <span class="text-bark-blue">1,000,000,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="relative z-10 py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Roadmap</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">From puppy to powerhouse</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-bark-blue/50 transform translate-x-1/2"></div>
+                    
+                    <div class="space-y-12">
+                        <!-- Phase 1 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-blue flex items-center justify-center">
+                                <i class="fas fa-paw text-white"></i>
+                            </div>
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                                <h3 class="text-2xl font-bold mb-2 text-bark-blue">Phase 1: The Puppy Stage</h3>
+                                <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                    <li>Smart Contract Deployment</li>
+                                    <li>Website Launch (with 100% more dog GIFs)</li>
+                                    <li>Community Building on X and Telegram</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Phase 2 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-purple flex items-center justify-center">
+                                <i class="fas fa-running text-white"></i>
+                            </div>
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                                <h3 class="text-2xl font-bold mb-2 text-bark-purple">Phase 2: Zoomies</h3>
+                                <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                    <li>DEX Listing (e.g., PancakeSwap)</li>
+                                    <li>First "Meme-Off" competition</li>
+                                    <li>Initial donation to local animal shelters</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Phase 3 -->
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center">
+                                <i class="fas fa-paw text-white"></i>
+                            </div>
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                                <h3 class="text-2xl font-bold mb-2 text-blue-400">Phase 3: The Big Bark</h3>
+                                <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                                    <li>Centralized Exchange (CEX) listings</li>
+                                    <li>$BARK Merch Store (Dog collars included)</li>
+                                    <li>Partnerships with major "Pet-fluencers"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative z-10 py-20 bg-gradient-bark">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6">Join the Pack Today!</h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                Become part of the loudest, most enthusiastic dog in the crypto yard
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+                    <i class="fas fa-paw mr-2"></i> Buy $BARK Now
+                </button>
+                <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300">
+                    <i class="fab fa-telegram-plane mr-2"></i> Join Community
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-bark-dark/80 backdrop-blur-md border-t border-bark-blue/30 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <i class="fas fa-paw text-bark-blue text-2xl"></i>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-medium"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2023 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
