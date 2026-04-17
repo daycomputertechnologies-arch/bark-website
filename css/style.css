@@ -11,39 +11,118 @@ body {
     background-color: #f4f4f4;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
-}
-
-header h1 {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-nav ul {
-    list-style: none;
+/* =============================================
+   HERO SECTION
+   - position: fixed  → stays at top while page scrolls
+   - z-index: 100     → sits above page content so content
+                         disappears underneath it, not over it
+   - dim background   → noticeably darker than the rest of the page
+   ============================================= */
+.hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 60%, #0f1a0f 100%);
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 2rem;
+    z-index: 100;
+    color: white;
+    text-align: center;
 }
 
-nav a {
+.hero-content {
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.hero-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    border-radius: 50%;
+    opacity: 0.85;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #e0e0e0;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+.hero-tagline {
+    font-size: 1.3rem;
+    color: #888;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background-color: #3d6b3d;
     color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
-nav a:hover {
-    text-decoration: underline;
+.btn-primary:hover {
+    background-color: #2e5a2e;
 }
 
+.btn-secondary {
+    background-color: transparent;
+    color: #999;
+    padding: 0.8rem 2rem;
+    border: 2px solid #555;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #2a2a2a;
+    color: #ccc;
+    border-color: #777;
+}
+
+/* =============================================
+   PAGE WRAPPER
+   - margin-top: 100vh pushes all page content
+     below the fixed hero when the page first loads
+   - position: relative + z-index: 1 ensures the
+     wrapper stacks BELOW the hero (z-index: 100)
+     so sections slide under the hero on scroll
+   ============================================= */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+    margin-top: 100vh;
+    background-color: #f4f4f4;
+}
+
+/* =============================================
+   MAIN CONTENT
+   ============================================= */
 main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 2rem;
 }
 
 section {
@@ -51,7 +130,7 @@ section {
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 section h2 {
@@ -59,10 +138,50 @@ section h2 {
     margin-bottom: 1rem;
 }
 
+section ul {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.tokenomics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.token-stat {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3d6b3d;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
 footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 1rem 0;
-    margin-top: 2rem;
 }
