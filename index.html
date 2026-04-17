@@ -3,97 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>BARK Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">  
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div class="relative flex items-center justify-between h-16">
-                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-                <div class="hidden sm:flex sm:items-center sm:justify-between">
-                    <div class="flex-shrink-0">
-                        <h1 class="text-2xl font-bold text-gray-700">BARK</h1>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#" class="text-gray-500 hover:text-gray-800">Home</a>
-                            <a href="#tokenomics" class="text-gray-500 hover:text-gray-800">Tokenomics</a>
-                            <a href="#roadmap" class="text-gray-500 hover:text-gray-800">Roadmap</a>
-                            <a href="#footer" class="text-gray-500 hover:text-gray-800">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <header class="bg-blue-600 text-white">
-        <div class="max-w-7xl mx-auto py-20 text-center">
-            <h2 class="text-4xl font-bold">Welcome to the BARK Token</h2>
-            <p class="mt-4 text-lg">Join the movement and be a part of the future!</p>
-            <a href="#" class="mt-6 inline-block bg-white text-blue-600 font-bold py-2 px-4 rounded-lg">Get Started</a>
-        </div>
+<body class="bg-cover bg-center" style="background-image: url('path-to-your-animated-background');">
+    <header class="text-white bg-transparent p-10 text-center">
+        <h1 class="text-4xl font-bold">Welcome to BARK</h1>
+        <p class="mt-2 text-lg">Your gateway to decentralized finance.</p>
     </header>
 
-    <section id="tokenomics" class="py-20">
-        <div class="max-w-7xl mx-auto text-center">
-            <h3 class="text-3xl font-bold text-gray-800">Tokenomics</h3>
-            <p class="mt-4 text-lg text-gray-600">Understanding the distribution of BARK tokens.</p>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h4 class="font-bold text-lg">50% - Community</h4>
-                    <p>Tokens allocated to community building initiatives.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h4 class="font-bold text-lg">30% - Development</h4>
-                    <p>Funds for ongoing development and improvements.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h4 class="font-bold text-lg">20% - Marketing</h4>
-                    <p>Tokens for marketing efforts to expand our reach.</p>
-                </div>
-            </div>
+    <section id="tokenomics" class="py-20 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-semibold text-white">Tokenomics</h2>
+            <p class="mt-4 text-white">Details about token distribution, utility, and governance.</p>
         </div>
     </section>
 
-    <section id="roadmap" class="py-20 bg-gray-200">
-        <div class="max-w-7xl mx-auto text-center">
-            <h3 class="text-3xl font-bold text-gray-800">Roadmap</h3>
-            <p class="mt-4 text-lg text-gray-600">Our vision for the future.</p>
-            <!-- roadmap sections -->
-            <div class="flex justify-center mt-10">
-                <div class="border-l-4 border-blue-600 pl-6">
-                    <h4 class="font-bold text-lg">Q1 2023</h4>
-                    <p>Launch of BARK token.</p>
-                </div>
-                <div class="border-l-4 border-blue-600 pl-6">
-                    <h4 class="font-bold text-lg">Q2 2023</h4>
-                    <p>Partnership announcements.</p>
-                </div>
-                <div class="border-l-4 border-blue-600 pl-6">
-                    <h4 class="font-bold text-lg">Q3 2023</h4>
-                    <p>Expansion of the community.</p>
-                </div>
-            </div>
+    <section id="roadmap" class="py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-semibold">Roadmap</h2>
+            <p class="mt-4">Our journey toward the future of finance.</p>
         </div>
     </section>
 
-    <footer id="footer" class="bg-blue-600 text-white py-10">
-        <div class="max-w-7xl mx-auto text-center">
-            <p>&copy; 2023 BARK. All rights reserved.</p>
-            <ul class="flex justify-center space-x-4 mt-4">
-                <li><a href="#" class="text-white hover:text-gray-300"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#" class="text-white hover:text-gray-300"><i class="fab fa-facebook-square"></i></a></li>
-                <li><a href="#" class="text-white hover:text-gray-300"><i class="fab fa-instagram"></i></a></li>
-            </ul>
-        </div>
+    <footer class="text-center bg-gray-900 p-10">
+        <h2 class="text-xl font-semibold text-white">Get Started with BARK</h2>
+        <button class="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded">Join Now</button>
     </footer>
 </body>
 </html>
