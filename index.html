@@ -1,74 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Bark Website</title>
-    <style>
-        /* Custom Tailwind CSS Configuration */
-        @tailwind base;
-        @tailwind components;
-        @tailwind utilities;
-        @layer colors {
-            --bark-blue: #007bff;
-            --bark-purple: #6610f2;
-            --bark-dark: #343a40;
-        }
-        /* Animation keyframes */
-        @keyframes slide {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(0); }
-        }
-    </style>
+    <title>BARK Website</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-bark-blue text-white">
-    <nav class="flex justify-between p-5 bg-bark-dark">
-        <div class="text-2xl">Bark Website</div>
-        <ul class="flex space-x-4">
-            <li><a href="#" class="hover:underline">Home</a></li>
-            <li><a href="#tokenomics" class="hover:underline">Tokenomics</a></li>
-            <li><a href="#roadmap" class="hover:underline">Roadmap</a></li>
-            <li><a href="#contact" class="hover:underline">Contact</a></li>
-        </ul>
-    </nav>
-    <header class="hero bg-cover h-screen relative" style="background-image: url('path/to/animated-bg.gif');">
-        <div class="absolute inset-0 flex items-center justify-center">
-            <h1 class="text-5xl font-bold animate-slide">The Loudest Dog in the Yard</h1>
-        </div>
+<body>
+    <header>
+        <h1>Welcome to the BARK Website</h1>
     </header>
-    <section id="tokenomics" class="p-10 bg-bark-purple">
-        <h2 class="text-3xl text-center">Tokenomics Breakdown</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white text-bark-dark p-5 rounded shadow">
-                <h3 class="text-xl">Feature 1</h3>
-                <p>Description of feature 1.</p>
-            </div>
-            <div class="bg-white text-bark-dark p-5 rounded shadow">
-                <h3 class="text-xl">Feature 2</h3>
-                <p>Description of feature 2.</p>
-            </div>
-            <div class="bg-white text-bark-dark p-5 rounded shadow">
-                <h3 class="text-xl">Feature 3</h3>
-                <p>Description of feature 3.</p>
-            </div>
-        </div>
-    </section>
-    <section id="roadmap" class="p-10 bg-bark-blue">
-        <h2 class="text-3xl text-center">Roadmap Timeline</h2>
-        <ul class="list-disc p-5">
-            <li>Phase 1: Initial Launch</li>
-            <li>Phase 2: Token Distribution</li>
-            <li>Phase 3: Community Building</li>
-        </ul>
-    </section>
-    <footer id="contact" class="p-5 bg-bark-dark">
-        <h3 class="text-center">Connect with Us</h3>
-        <div class="text-center">
-            <a href="https://twitter.com/" class="hover:underline">Twitter</a> |
-            <a href="https://facebook.com/" class="hover:underline">Facebook</a> |
-            <a href="https://instagram.com/" class="hover:underline">Instagram</a>
-        </div>
+    <main>
+        <section>
+            <h2>About Us</h2>
+            <p>This website is dedicated to BARK, a fictional organization.</p>
+        </section>
+        <section>
+            <h2>Our Services</h2>
+            <ul>
+                <li>Service 1</li>
+                <li>Service 2</li>
+                <li>Service 3</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © 2026 BARK. All rights reserved.</p>
     </footer>
 </body>
 </html>
