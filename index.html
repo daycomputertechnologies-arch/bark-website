@@ -90,7 +90,7 @@
             width: 100%;
             background-color: #0ea5e9;
         }
-        /* Navigation logo image styling - twice as big (80px) */
+        /* Logo image styling - twice as big (80px) */
         .logo-img {
             height: 80px;
             width: auto;
@@ -123,6 +123,55 @@
             gap: 0.75rem;
             cursor: pointer;
         }
+        /* Modal styles for PDF viewer */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            width: 90%;
+            height: 90%;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.3);
+        }
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-modal:hover {
+            color: #0ea5e9;
+            transform: scale(1.1);
+        }
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
         /* Toast notification */
         .toast-notification {
             position: fixed;
@@ -149,6 +198,14 @@
         <div class="absolute top-1/3 right-1/4 w-72 h-72 bg-bark-purple rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element animate-pulse"></div>
         <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-bark-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-pulse-slow"></div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <iframe id="pdfFrame" class="pdf-frame" src=""></iframe>
+        </div>
     </div>
 
     <!-- Navigation Bar -->
@@ -397,11 +454,11 @@
         </div>
     </section>
 
-    <!-- Footer with Logo - Now Twice as Big -->
+    <!-- Footer with Logo -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <!-- Footer Logo Area - Logo before BARK text (both now larger) -->
+                <!-- Footer Logo Area - Logo before BARK text -->
                 <div class="footer-logo-container group mb-6 md:mb-0" data-nav="home">
                     <img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
@@ -429,12 +486,53 @@
             // LOGO PATH - RAW URL (not the blob URL)
             const LOGO_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png';
             
-            // WHITEPAPER PATH - RAW URL (not the blob URL)
-            const WHITEPAPER_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
+            // WHITEPAPER PATH - RAW URL for viewing (using Google Docs Viewer to avoid download)
+            const WHITEPAPER_RAW_URL = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
+            // Google Docs Viewer URL - displays PDF in browser without downloading
+            const WHITEPAPER_VIEWER_URL = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(WHITEPAPER_RAW_URL)}`;
             
             // ============================================
             // END OF CONFIGURATION
             // ============================================
+            
+            // Modal elements
+            const modal = document.getElementById('pdfModal');
+            const pdfFrame = document.getElementById('pdfFrame');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            // Function to open PDF in modal
+            function openPdfViewer() {
+                pdfFrame.src = WHITEPAPER_VIEWER_URL;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                showToast('📄 Loading Whitepaper...');
+            }
+            
+            // Function to close modal
+            function closeModal() {
+                modal.style.display = 'none';
+                pdfFrame.src = '';
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Close modal when clicking X
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+            
+            // Close modal when clicking outside the content
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
             
             // Function to show toast notification
             function showToast(message, isError = false) {
@@ -504,30 +602,6 @@
                 }
             }
             
-            // Whitepaper function - opens PDF from GitHub raw URL
-            function openWhitepaper() {
-                if (WHITEPAPER_PATH) {
-                    // Check if file exists before opening
-                    fetch(WHITEPAPER_PATH, { method: 'HEAD' })
-                        .then(response => {
-                            if (response.ok) {
-                                window.open(WHITEPAPER_PATH, '_blank');
-                                showToast('📄 Opening $BARK Whitepaper...');
-                                console.log('✅ Whitepaper opened from:', WHITEPAPER_PATH);
-                            } else {
-                                showToast('❌ Whitepaper file not found (404). Please check the path.', true);
-                                console.error('❌ Whitepaper returned status:', response.status);
-                            }
-                        })
-                        .catch(error => {
-                            showToast('❌ Cannot access whitepaper. Please check your connection.', true);
-                            console.error('❌ Whitepaper fetch error:', error);
-                        });
-                } else {
-                    showToast('❌ Whitepaper path not configured.', true);
-                }
-            }
-            
             // Get all navigation buttons
             const navButtons = document.querySelectorAll('[data-nav]');
             
@@ -542,7 +616,7 @@
                             scrollToSection('home');
                             break;
                         case 'whitepaper':
-                            openWhitepaper();
+                            openPdfViewer();
                             break;
                         case 'tokenomics':
                             scrollToSection('tokenomics');
@@ -616,7 +690,7 @@
             
             console.log("🎉 $BARK Navigation fully functional!");
             console.log("🖼️ Logo URL:", LOGO_PATH);
-            console.log("📄 Whitepaper URL:", WHITEPAPER_PATH);
+            console.log("📄 Whitepaper will open in embedded viewer (no download required)");
         })();
     </script>
 </body>
