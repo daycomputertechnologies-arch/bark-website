@@ -14,7 +14,7 @@
                         'bark-blue': '#0ea5e9',
                         'bark-dark': '#0f172a',
                         'bark-purple': '#7c3aed',
-                        'bark-glow': '#0ea5e9'
+                        'bark-glow': '#0ea5e9',
                     },
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -35,23 +35,72 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .bg-gradient-bark {
-                background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0ea5e9 100%);
-            }
-            .glow-effect {
-                filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
-            }
-            .floating-element {
-                animation: float 8s ease-in-out infinite;
-            }
-            .background-grid {
-                background-image: 
-                    linear-gradient(rgba(14, 165, 233, 0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
-                background-size: 30px 30px;
-            }
+    <style>
+        /* Custom smooth scroll behavior and nav transition */
+        html {
+            scroll-behavior: smooth;
+        }
+        .nav-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-scrolled {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+            background-color: #020617 !important;
+            backdrop-filter: blur(16px);
+            border-bottom-width: 1px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+        .nav-scrolled .logo-img {
+            height: 32px !important;
+            width: auto !important;
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled .logo-text {
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled .nav-button {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled .nav-link-item {
+            font-size: 0.9rem;
+        }
+        .glow-effect {
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
+        }
+        .floating-element {
+            animation: float 8s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .bg-gradient-bark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0ea5e9 100%);
+        }
+        /* Active nav link indicator */
+        .nav-link-item.active {
+            color: #0ea5e9;
+            text-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
+        }
+        .nav-link-item.active::after {
+            width: 100%;
+            background-color: #0ea5e9;
+        }
+        /* Logo image styling */
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
     </style>
 </head>
@@ -64,28 +113,38 @@
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-pulse-slow"></div>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav class="relative z-10 bg-bark-dark/80 backdrop-blur-md border-b border-bark-blue/30 sticky top-0">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-paw text-bark-blue text-2xl"></i>
-                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
+    <!-- Navigation Bar - WITH LOGO -->
+    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo Area - Clickable to Home -->
+            <div class="logo-container cursor-pointer group" data-nav="home">
+                <img id="navLogo" class="logo-img" src="" alt="$BARK Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="hidden items-center space-x-2">
+                    <i class="fas fa-paw text-bark-blue text-2xl logo-icon nav-transition group-hover:scale-110 transition-transform"></i>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
+                </div>
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
             </div>
+            
+            <!-- Navigation Links -->
             <div class="hidden md:flex space-x-8">
-                <button class="hover:text-bark-blue transition-colors duration-300">Home</button>
-                <button class="hover:text-bark-blue transition-colors duration-300">Whitepaper</button>
-                <button class="hover:text-bark-blue transition-colors duration-300">Tokenomics</button>
-                <button class="hover:text-bark-blue transition-colors duration-300">Roadmap</button>
-                <button class="hover:text-bark-blue transition-colors duration-300">Team</button>
+                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="home">Home</button>
+                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="whitepaper">Whitepaper</button>
+                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="tokenomics">Tokenomics</button>
+                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="roadmap">Roadmap</button>
+                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="team">Team</button>
             </div>
-            <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+            
+            <!-- Buy Button -->
+            <button class="nav-button bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect font-semibold" data-nav="buy">
                 Buy $BARK
             </button>
         </div>
+        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-bark-blue to-transparent opacity-60"></div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative z-10 pt-20 pb-32">
+    <!-- Hero Section (Home) -->
+    <section id="home" class="relative z-10 pt-32 pb-32 scroll-mt-20">
         <div class="container mx-auto px-4 text-center">
             <div class="max-w-4xl mx-auto">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -98,23 +157,23 @@
                     <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
                         <i class="fas fa-paw mr-2"></i> Get $BARK Now
                     </button>
-                    <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300">
+                    <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300" data-nav="whitepaper">
                         <i class="fas fa-file-alt mr-2"></i> Read Whitepaper
                     </button>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform">
                         <i class="fas fa-volume-up text-4xl text-bark-blue mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">Maximum Volume</h3>
                         <p class="text-gray-400">We're all about making noise, not hiding behind silence.</p>
                     </div>
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform">
                         <i class="fas fa-burn text-4xl text-bark-purple mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">Perpetual Growth</h3>
                         <p class="text-gray-400">Burned tokens ensure scarcity and long-term value.</p>
                     </div>
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300">
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform">
                         <i class="fas fa-users text-4xl text-bark-blue mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">Community Focused</h3>
                         <p class="text-gray-400">Built for the community, by the community.</p>
@@ -125,7 +184,7 @@
     </section>
 
     <!-- Tokenomics Section -->
-    <section class="relative z-10 py-20 bg-gradient-bark">
+    <section id="tokenomics" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">Tokenomics</h2>
@@ -136,35 +195,35 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <div class="space-y-6">
-                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all">
                                 <div class="flex items-center">
                                     <div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div>
                                     <span>Public Launch (60%)</span>
                                 </div>
                                 <span class="font-bold">600,000,000</span>
                             </div>
-                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all">
                                 <div class="flex items-center">
                                     <div class="w-4 h-4 bg-bark-purple rounded-full mr-3"></div>
                                     <span>Marketing & Hype (20%)</span>
                                 </div>
                                 <span class="font-bold">200,000,000</span>
                             </div>
-                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all">
                                 <div class="flex items-center">
                                     <div class="w-4 h-4 bg-blue-400 rounded-full mr-3"></div>
                                     <span>The Dog Park (10%)</span>
                                 </div>
                                 <span class="font-bold">100,000,000</span>
                             </div>
-                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all">
                                 <div class="flex items-center">
                                     <div class="w-4 h-4 bg-purple-400 rounded-full mr-3"></div>
                                     <span>Dev Kennel (5%)</span>
                                 </div>
                                 <span class="font-bold">50,000,000</span>
                             </div>
-                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30">
+                            <div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all">
                                 <div class="flex items-center">
                                     <div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div>
                                     <span>Charity – Animal Shelters (5%)</span>
@@ -174,18 +233,18 @@
                         </div>
                     </div>
                     
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-8 rounded-xl border border-bark-blue/30 text-center">
+                    <div class="bg-bark-dark/50 backdrop-blur-sm p-8 rounded-xl border border-bark-blue/30 text-center hover:shadow-xl transition-all duration-300">
                         <h3 class="text-2xl font-bold mb-4">3% Transaction Tax</h3>
                         <div class="grid grid-cols-3 gap-4 mb-6">
-                            <div class="p-4 bg-bark-blue/20 rounded-lg">
+                            <div class="p-4 bg-bark-blue/20 rounded-lg hover:bg-bark-blue/30 transition-all">
                                 <div class="text-3xl font-bold mb-2">1%</div>
                                 <div class="text-sm">Burn</div>
                             </div>
-                            <div class="p-4 bg-bark-purple/20 rounded-lg">
+                            <div class="p-4 bg-bark-purple/20 rounded-lg hover:bg-bark-purple/30 transition-all">
                                 <div class="text-3xl font-bold mb-2">1%</div>
                                 <div class="text-sm">Liquidity</div>
                             </div>
-                            <div class="p-4 bg-blue-400/20 rounded-lg">
+                            <div class="p-4 bg-blue-400/20 rounded-lg hover:bg-blue-400/30 transition-all">
                                 <div class="text-3xl font-bold mb-2">1%</div>
                                 <div class="text-sm">Marketing</div>
                             </div>
@@ -200,7 +259,7 @@
     </section>
 
     <!-- Roadmap Section -->
-    <section class="relative z-10 py-20">
+    <section id="roadmap" class="relative z-10 py-20 scroll-mt-20">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">Roadmap</h2>
@@ -209,16 +268,13 @@
             
             <div class="max-w-4xl mx-auto">
                 <div class="relative">
-                    <!-- Timeline line -->
                     <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-bark-blue/50 transform translate-x-1/2"></div>
-                    
                     <div class="space-y-12">
-                        <!-- Phase 1 -->
-                        <div class="relative pl-12">
-                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-blue flex items-center justify-center">
-                                <i class="fas fa-paw text-white"></i>
+                        <div class="relative pl-12 group">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-blue flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <i class="fas fa-paw text-white text-sm"></i>
                             </div>
-                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all">
                                 <h3 class="text-2xl font-bold mb-2 text-bark-blue">Phase 1: The Puppy Stage</h3>
                                 <ul class="list-disc pl-6 space-y-2 text-gray-300">
                                     <li>Smart Contract Deployment</li>
@@ -227,13 +283,11 @@
                                 </ul>
                             </div>
                         </div>
-                        
-                        <!-- Phase 2 -->
-                        <div class="relative pl-12">
-                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-purple flex items-center justify-center">
-                                <i class="fas fa-running text-white"></i>
+                        <div class="relative pl-12 group">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-purple flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <i class="fas fa-running text-white text-sm"></i>
                             </div>
-                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all">
                                 <h3 class="text-2xl font-bold mb-2 text-bark-purple">Phase 2: Zoomies</h3>
                                 <ul class="list-disc pl-6 space-y-2 text-gray-300">
                                     <li>DEX Listing (e.g., PancakeSwap)</li>
@@ -242,13 +296,11 @@
                                 </ul>
                             </div>
                         </div>
-                        
-                        <!-- Phase 3 -->
-                        <div class="relative pl-12">
-                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center">
-                                <i class="fas fa-paw text-white"></i>
+                        <div class="relative pl-12 group">
+                            <div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <i class="fas fa-paw text-white text-sm"></i>
                             </div>
-                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30">
+                            <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all">
                                 <h3 class="text-2xl font-bold mb-2 text-blue-400">Phase 3: The Big Bark</h3>
                                 <ul class="list-disc pl-6 space-y-2 text-gray-300">
                                     <li>Centralized Exchange (CEX) listings</li>
@@ -263,8 +315,38 @@
         </div>
     </section>
 
+    <!-- Team Section -->
+    <section id="team" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Our Pack</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">The dedicated team behind $BARK</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300">
+                    <div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🐕</div>
+                    <h3 class="text-xl font-bold mb-2">Max "Alpha" BARK</h3>
+                    <p class="text-bark-blue">Lead Developer</p>
+                    <p class="text-gray-400 text-sm mt-2">10+ years in blockchain</p>
+                </div>
+                <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300">
+                    <div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🐩</div>
+                    <h3 class="text-xl font-bold mb-2">Sarah "The Growl"</h3>
+                    <p class="text-bark-blue">Marketing Director</p>
+                    <p class="text-gray-400 text-sm mt-2">Meme strategist expert</p>
+                </div>
+                <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300">
+                    <div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🦮</div>
+                    <h3 class="text-xl font-bold mb-2">James "BarkWhale"</h3>
+                    <p class="text-bark-blue">Community Lead</p>
+                    <p class="text-gray-400 text-sm mt-2">Building the loudest pack</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
-    <section class="relative z-10 py-20 bg-gradient-bark">
+    <section id="buy" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-6">Join the Pack Today!</h2>
             <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
@@ -282,24 +364,196 @@
     </section>
 
     <!-- Footer -->
-    <footer class="relative z-10 bg-bark-dark/80 backdrop-blur-md border-t border-bark-blue/30 py-12">
+    <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0 cursor-pointer" data-nav="home">
                     <i class="fas fa-paw text-bark-blue text-2xl"></i>
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-medium"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-colors duration-300"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-telegram-plane text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-medium text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-github text-xl"></i></a>
                 </div>
             </div>
-            <div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500">
-                <p>&copy; 2023 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p>
+            <div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p>
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript for Navigation Functionality -->
+    <script>
+        (function() {
+            // ============================================
+            // CONFIGURATION - UPDATE THESE PATHS
+            // ============================================
+            
+            // LOGO PATH - Replace with your GitHub raw image URL
+            // Example: 'https://raw.githubusercontent.com/yourusername/yourrepo/main/logo.png'
+            const LOGO_PATH = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/logo.png';
+            
+            // WHITEPAPER PATH - Replace with your GitHub raw PDF URL or local path
+            // Option 1: GitHub raw URL - 'https://raw.githubusercontent.com/yourusername/yourrepo/main/whitepaper.pdf'
+            // Option 2: Local file path - 'D:\\$bark website\\assests\\documents\\whitepaper.pdf'
+            const WHITEPAPER_PATH = 'D:\\$bark website\\assests\\documents\\whitepaper.pdf';
+            
+            // ============================================
+            // END OF CONFIGURATION
+            // ============================================
+            
+            // Set the logo image
+            const logoImg = document.getElementById('navLogo');
+            if (logoImg && LOGO_PATH) {
+                logoImg.src = LOGO_PATH;
+                logoImg.style.display = 'block';
+                // Hide the fallback text if logo loads successfully
+                logoImg.onload = function() {
+                    const parentContainer = logoImg.closest('.logo-container');
+                    const textSpan = parentContainer.querySelector('.logo-text');
+                    if (textSpan) textSpan.style.display = 'none';
+                };
+                logoImg.onerror = function() {
+                    console.warn('Logo failed to load from:', LOGO_PATH);
+                    this.style.display = 'none';
+                    // Show fallback paw icon and text
+                    const parentContainer = this.closest('.logo-container');
+                    const fallbackIcon = parentContainer.querySelector('.fa-paw');
+                    const textSpan = parentContainer.querySelector('.logo-text');
+                    if (fallbackIcon) fallbackIcon.style.display = 'inline-block';
+                    if (textSpan) textSpan.style.display = 'inline-block';
+                };
+            }
+            
+            // Navbar scroll effect
+            const nav = document.getElementById('mainNav');
+            
+            function handleNavScroll() {
+                if (window.scrollY > 20) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            }
+            
+            handleNavScroll();
+            window.addEventListener('scroll', handleNavScroll);
+            
+            // Smooth scroll to section function
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const navHeight = nav.offsetHeight;
+                    const sectionPosition = section.offsetTop - navHeight - 10;
+                    window.scrollTo({
+                        top: sectionPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Whitepaper function - opens PDF from configured path
+            function openWhitepaper() {
+                if (WHITEPAPER_PATH) {
+                    window.open(WHITEPAPER_PATH, '_blank');
+                    console.log('Opening whitepaper from: ' + WHITEPAPER_PATH);
+                } else {
+                    alert('Whitepaper path not configured. Please update the WHITEPAPER_PATH variable.');
+                }
+            }
+            
+            // Get all navigation buttons
+            const navButtons = document.querySelectorAll('[data-nav]');
+            
+            // Add click handlers to navigation elements
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = btn.getAttribute('data-nav');
+                    
+                    switch(target) {
+                        case 'home':
+                            scrollToSection('home');
+                            break;
+                        case 'whitepaper':
+                            openWhitepaper();
+                            break;
+                        case 'tokenomics':
+                            scrollToSection('tokenomics');
+                            break;
+                        case 'roadmap':
+                            scrollToSection('roadmap');
+                            break;
+                        case 'team':
+                            scrollToSection('team');
+                            break;
+                        case 'buy':
+                            scrollToSection('buy');
+                            break;
+                        default:
+                            if (target && document.getElementById(target)) {
+                                scrollToSection(target);
+                            }
+                    }
+                    
+                    // Update active state for nav links
+                    document.querySelectorAll('.nav-link-item').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    if (btn.classList.contains('nav-link-item')) {
+                        btn.classList.add('active');
+                    }
+                });
+            });
+            
+            // Highlight active section on scroll
+            const sections = ['home', 'tokenomics', 'roadmap', 'team', 'buy'];
+            const navLinks = document.querySelectorAll('.nav-link-item');
+            
+            function updateActiveSection() {
+                const scrollPosition = window.scrollY + nav.offsetHeight + 50;
+                
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const sectionTop = section.offsetTop;
+                        const sectionBottom = sectionTop + section.offsetHeight;
+                        
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                            navLinks.forEach(link => {
+                                const linkTarget = link.getAttribute('data-nav');
+                                if (linkTarget === sectionId) {
+                                    link.classList.add('active');
+                                } else {
+                                    link.classList.remove('active');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveSection);
+            updateActiveSection();
+            
+            // Interactive button alerts for demo
+            const allBtns = document.querySelectorAll('button');
+            allBtns.forEach(btn => {
+                const btnText = btn.innerText;
+                if (!btn.hasAttribute('data-nav') && (btnText.includes('Buy') || btnText.includes('Get') || btnText.includes('Join Community'))) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        alert('🚀 BARK to the moon! (Demo interaction - contract integration coming soon)');
+                    });
+                }
+            });
+            
+            console.log("$BARK Navigation fully functional!");
+            console.log("Logo path:", LOGO_PATH);
+            console.log("Whitepaper path:", WHITEPAPER_PATH);
+        })();
+    </script>
 </body>
 </html>
