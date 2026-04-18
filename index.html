@@ -52,12 +52,12 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
         }
         .nav-scrolled .logo-img {
-            height: 32px !important;
+            height: 64px !important;
             width: auto !important;
             transition: all 0.3s ease;
         }
         .nav-scrolled .logo-text {
-            font-size: 1.25rem;
+            font-size: 1.25rem !important;
             transition: all 0.3s ease;
         }
         .nav-scrolled .nav-button {
@@ -90,17 +90,55 @@
             width: 100%;
             background-color: #0ea5e9;
         }
-        /* Logo image styling */
+        /* Navigation logo image styling - twice as big (80px) */
         .logo-img {
-            height: 40px;
+            height: 80px;
             width: auto;
             object-fit: contain;
             transition: all 0.3s ease;
+            display: block;
         }
         .logo-container {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            cursor: pointer;
+        }
+        .logo-text {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        /* Footer logo styling - also twice as big (80px) */
+        .footer-logo-img {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e293b;
+            border-left: 4px solid #0ea5e9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
@@ -113,16 +151,12 @@
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-pulse-slow"></div>
     </div>
 
-    <!-- Navigation Bar - WITH LOGO -->
+    <!-- Navigation Bar -->
     <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <!-- Logo Area - Clickable to Home -->
-            <div class="logo-container cursor-pointer group" data-nav="home">
-                <img id="navLogo" class="logo-img" src="" alt="$BARK Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                <div class="hidden items-center space-x-2">
-                    <i class="fas fa-paw text-bark-blue text-2xl logo-icon nav-transition group-hover:scale-110 transition-transform"></i>
-                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
-                </div>
+            <!-- Logo Area - Logo and BARK Text Perfectly Aligned with TWICE THE SIZE -->
+            <div class="logo-container group" data-nav="home">
+                <img id="navLogo" class="logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                 <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
             </div>
             
@@ -363,12 +397,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer with Logo - Now Twice as Big -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center space-x-2 mb-6 md:mb-0 cursor-pointer" data-nav="home">
-                    <i class="fas fa-paw text-bark-blue text-2xl"></i>
+                <!-- Footer Logo Area - Logo before BARK text (both now larger) -->
+                <div class="footer-logo-container group mb-6 md:mb-0" data-nav="home">
+                    <img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
                 </div>
                 <div class="flex space-x-6">
@@ -388,43 +423,58 @@
     <script>
         (function() {
             // ============================================
-            // CONFIGURATION - UPDATE THESE PATHS
+            // CONFIGURATION - RAW URLs from GitHub
             // ============================================
             
-            // LOGO PATH - Replace with your GitHub raw image URL
-            // Example: 'https://raw.githubusercontent.com/yourusername/yourrepo/main/logo.png'
-            const LOGO_PATH = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/logo.png';
+            // LOGO PATH - RAW URL (not the blob URL)
+            const LOGO_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png';
             
-            // WHITEPAPER PATH - Replace with your GitHub raw PDF URL or local path
-            // Option 1: GitHub raw URL - 'https://raw.githubusercontent.com/yourusername/yourrepo/main/whitepaper.pdf'
-            // Option 2: Local file path - 'D:\\$bark website\\assests\\documents\\whitepaper.pdf'
-            const WHITEPAPER_PATH = 'D:\\$bark website\\assests\\documents\\whitepaper.pdf';
+            // WHITEPAPER PATH - RAW URL (not the blob URL)
+            const WHITEPAPER_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
             
             // ============================================
             // END OF CONFIGURATION
             // ============================================
             
-            // Set the logo image
-            const logoImg = document.getElementById('navLogo');
-            if (logoImg && LOGO_PATH) {
-                logoImg.src = LOGO_PATH;
-                logoImg.style.display = 'block';
-                // Hide the fallback text if logo loads successfully
-                logoImg.onload = function() {
-                    const parentContainer = logoImg.closest('.logo-container');
-                    const textSpan = parentContainer.querySelector('.logo-text');
-                    if (textSpan) textSpan.style.display = 'none';
+            // Function to show toast notification
+            function showToast(message, isError = false) {
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.style.borderLeftColor = isError ? '#ef4444' : '#0ea5e9';
+                toast.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} ${isError ? 'text-red-400' : 'text-bark-blue'}"></i>
+                        <span class="text-sm">${message}</span>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            }
+            
+            // Set logo image in navigation
+            const navLogo = document.getElementById('navLogo');
+            if (navLogo) {
+                navLogo.onload = function() {
+                    console.log('✅ Navigation logo loaded successfully from:', LOGO_PATH);
                 };
-                logoImg.onerror = function() {
-                    console.warn('Logo failed to load from:', LOGO_PATH);
-                    this.style.display = 'none';
-                    // Show fallback paw icon and text
-                    const parentContainer = this.closest('.logo-container');
-                    const fallbackIcon = parentContainer.querySelector('.fa-paw');
-                    const textSpan = parentContainer.querySelector('.logo-text');
-                    if (fallbackIcon) fallbackIcon.style.display = 'inline-block';
-                    if (textSpan) textSpan.style.display = 'inline-block';
+                navLogo.onerror = function() {
+                    console.warn('⚠️ Navigation logo failed to load from:', LOGO_PATH);
+                    showToast('⚠️ Logo not found, using fallback icon', true);
                 };
+                navLogo.src = LOGO_PATH;
+            }
+            
+            // Set logo image in footer
+            const footerLogo = document.getElementById('footerLogo');
+            if (footerLogo) {
+                footerLogo.onload = function() {
+                    console.log('✅ Footer logo loaded successfully from:', LOGO_PATH);
+                    showToast('🚀 BARK website loaded!');
+                };
+                footerLogo.onerror = function() {
+                    console.warn('⚠️ Footer logo failed to load from:', LOGO_PATH);
+                };
+                footerLogo.src = LOGO_PATH;
             }
             
             // Navbar scroll effect
@@ -454,13 +504,27 @@
                 }
             }
             
-            // Whitepaper function - opens PDF from configured path
+            // Whitepaper function - opens PDF from GitHub raw URL
             function openWhitepaper() {
                 if (WHITEPAPER_PATH) {
-                    window.open(WHITEPAPER_PATH, '_blank');
-                    console.log('Opening whitepaper from: ' + WHITEPAPER_PATH);
+                    // Check if file exists before opening
+                    fetch(WHITEPAPER_PATH, { method: 'HEAD' })
+                        .then(response => {
+                            if (response.ok) {
+                                window.open(WHITEPAPER_PATH, '_blank');
+                                showToast('📄 Opening $BARK Whitepaper...');
+                                console.log('✅ Whitepaper opened from:', WHITEPAPER_PATH);
+                            } else {
+                                showToast('❌ Whitepaper file not found (404). Please check the path.', true);
+                                console.error('❌ Whitepaper returned status:', response.status);
+                            }
+                        })
+                        .catch(error => {
+                            showToast('❌ Cannot access whitepaper. Please check your connection.', true);
+                            console.error('❌ Whitepaper fetch error:', error);
+                        });
                 } else {
-                    alert('Whitepaper path not configured. Please update the WHITEPAPER_PATH variable.');
+                    showToast('❌ Whitepaper path not configured.', true);
                 }
             }
             
@@ -545,14 +609,14 @@
                 if (!btn.hasAttribute('data-nav') && (btnText.includes('Buy') || btnText.includes('Get') || btnText.includes('Join Community'))) {
                     btn.addEventListener('click', (e) => {
                         e.preventDefault();
-                        alert('🚀 BARK to the moon! (Demo interaction - contract integration coming soon)');
+                        showToast('🚀 BARK to the moon! Coming soon!');
                     });
                 }
             });
             
-            console.log("$BARK Navigation fully functional!");
-            console.log("Logo path:", LOGO_PATH);
-            console.log("Whitepaper path:", WHITEPAPER_PATH);
+            console.log("🎉 $BARK Navigation fully functional!");
+            console.log("🖼️ Logo URL:", LOGO_PATH);
+            console.log("📄 Whitepaper URL:", WHITEPAPER_PATH);
         })();
     </script>
 </body>
