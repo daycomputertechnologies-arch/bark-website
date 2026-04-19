@@ -90,38 +90,61 @@
             width: 100%;
             background-color: #0ea5e9;
         }
-        /* Logo image styling - twice as big (80px) */
+        /* Logo image styling - twice as big (80px) with hover zoom effect */
         .logo-img {
             height: 80px;
             width: auto;
             object-fit: contain;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
+        }
+        /* Hover effect for navigation logo - zoom to twice the size (160px) */
+        .logo-container:hover .logo-img {
+            transform: scale(2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for navigation text - subtle scale */
+        .logo-container:hover .logo-text {
+            transform: scale(1.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .logo-container {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         .logo-text {
             display: inline-block;
             line-height: 1;
             vertical-align: middle;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Footer logo styling - also twice as big (80px) */
+        /* Footer logo styling - also twice as big (80px) with hover zoom effect */
         .footer-logo-img {
             height: 80px;
             width: auto;
             object-fit: contain;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
+        }
+        /* Hover effect for footer logo - zoom to twice the size (160px) */
+        .footer-logo-container:hover .footer-logo-img {
+            transform: scale(2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for footer text - subtle scale */
+        .footer-logo-container:hover span {
+            transform: scale(1.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .footer-logo-container {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         /* Modal styles for PDF viewer */
         .modal {
@@ -211,7 +234,7 @@
     <!-- Navigation Bar -->
     <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <!-- Logo Area - Logo and BARK Text -->
+            <!-- Logo Area - Logo and BARK Text with Hover Zoom Effect -->
             <div class="logo-container group" data-nav="home">
                 <img id="navLogo" class="logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                 <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
@@ -454,7 +477,7 @@
         </div>
     </section>
 
-    <!-- Footer with Social Media Links -->
+    <!-- Footer with Social Media Links and Hover Zoom Effect -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
@@ -704,6 +727,7 @@
             console.log("📄 Whitepaper will open in embedded viewer (no download required)");
             console.log("🔗 Social links: Twitter and Telegram added to footer");
             console.log("📱 Join Community button now links to Telegram");
+            console.log("🐕 Logo hover effect: Zooms to 2x size on hover!");
         })();
     </script>
 </body>
