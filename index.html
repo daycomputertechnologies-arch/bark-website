@@ -211,7 +211,7 @@
     <!-- Navigation Bar -->
     <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <!-- Logo Area - Logo and BARK Text Perfectly Aligned with TWICE THE SIZE -->
+            <!-- Logo Area - Logo and BARK Text -->
             <div class="logo-container group" data-nav="home">
                 <img id="navLogo" class="logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                 <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
@@ -436,7 +436,7 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA Section with Join Community Button linking to Telegram -->
     <section id="buy" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-6">Join the Pack Today!</h2>
@@ -447,27 +447,38 @@
                 <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
                     <i class="fas fa-paw mr-2"></i> Buy $BARK Now
                 </button>
-                <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300">
+                <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300 inline-flex items-center justify-center">
                     <i class="fab fa-telegram-plane mr-2"></i> Join Community
-                </button>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer with Logo - Updated to 2026 -->
+    <!-- Footer with Social Media Links -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <!-- Footer Logo Area - Logo before BARK text -->
                 <div class="footer-logo-container group mb-6 md:mb-0" data-nav="home">
                     <img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-twitter text-xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-telegram-plane text-xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-medium text-xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-github text-xl"></i></a>
+                    <!-- Twitter/X Link -->
+                    <a href="https://x.com/barkdogmeme?s=11" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <!-- Telegram Link -->
+                    <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-telegram-plane text-xl"></i>
+                    </a>
+                    <!-- Medium (placeholder - keep for future) -->
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-medium text-xl"></i>
+                    </a>
+                    <!-- GitHub (placeholder - keep for future) -->
+                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
                 </div>
             </div>
             <div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500 text-sm">
@@ -676,11 +687,11 @@
             window.addEventListener('scroll', updateActiveSection);
             updateActiveSection();
             
-            // Interactive button alerts for demo
-            const allBtns = document.querySelectorAll('button');
-            allBtns.forEach(btn => {
+            // Interactive button alerts for demo (only for Buy button now)
+            const buyButtons = document.querySelectorAll('button');
+            buyButtons.forEach(btn => {
                 const btnText = btn.innerText;
-                if (!btn.hasAttribute('data-nav') && (btnText.includes('Buy') || btnText.includes('Get') || btnText.includes('Join Community'))) {
+                if (!btn.hasAttribute('data-nav') && btnText.includes('Buy')) {
                     btn.addEventListener('click', (e) => {
                         e.preventDefault();
                         showToast('🚀 BARK to the moon! Coming soon!');
@@ -691,6 +702,8 @@
             console.log("🎉 $BARK Navigation fully functional!");
             console.log("🖼️ Logo URL:", LOGO_PATH);
             console.log("📄 Whitepaper will open in embedded viewer (no download required)");
+            console.log("🔗 Social links: Twitter and Telegram added to footer");
+            console.log("📱 Join Community button now links to Telegram");
         })();
     </script>
 </body>
