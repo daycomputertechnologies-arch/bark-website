@@ -98,22 +98,23 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
         }
-        /* Hover effect for navigation logo - zoom to twice the size (160px) */
-        .logo-container:hover .logo-img {
-            transform: scale(2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Hover effect for navigation text - subtle scale */
-        .logo-container:hover .logo-text {
-            transform: scale(1.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Container for nav logo and text */
         .logo-container {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for navigation logo - zoom to twice the size */
+        .logo-container:hover .logo-img {
+            transform: scale(2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for navigation text - move right when logo zooms */
+        .logo-container:hover .logo-text {
+            transform: translateX(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .logo-text {
             display: inline-block;
@@ -129,22 +130,23 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
         }
-        /* Hover effect for footer logo - zoom to twice the size (160px) */
-        .footer-logo-container:hover .footer-logo-img {
-            transform: scale(2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Hover effect for footer text - subtle scale */
-        .footer-logo-container:hover span {
-            transform: scale(1.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Container for footer logo and text */
         .footer-logo-container {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for footer logo - zoom to twice the size */
+        .footer-logo-container:hover .footer-logo-img {
+            transform: scale(2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hover effect for footer text - move right when logo zooms */
+        .footer-logo-container:hover span {
+            transform: translateX(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         /* Modal styles for PDF viewer */
         .modal {
@@ -234,7 +236,7 @@
     <!-- Navigation Bar -->
     <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <!-- Logo Area - Logo and BARK Text with Hover Zoom Effect -->
+            <!-- Logo Area - Logo and BARK Text with Hover Zoom & Text Movement -->
             <div class="logo-container group" data-nav="home">
                 <img id="navLogo" class="logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
                 <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
@@ -727,7 +729,7 @@
             console.log("📄 Whitepaper will open in embedded viewer (no download required)");
             console.log("🔗 Social links: Twitter and Telegram added to footer");
             console.log("📱 Join Community button now links to Telegram");
-            console.log("🐕 Logo hover effect: Zooms to 2x size on hover!");
+            console.log("🐕 Logo hover effect: Zooms to 2x size, text moves right!");
         })();
     </script>
 </body>
