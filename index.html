@@ -1,6 +1,3 @@
-Here's the updated code with only the Twitter and Telegram social media icons in the footer:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,6 +153,15 @@ Here's the updated code with only the Twitter and Telegram social media icons in
         .footer-logo-container:hover span {
             transform: translateX(20px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Social icons styling - 5 times bigger */
+        .social-icon {
+            font-size: 5rem !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
         }
         /* Modal styles for PDF viewer */
         .modal {
@@ -488,7 +494,7 @@ Here's the updated code with only the Twitter and Telegram social media icons in
         </div>
     </section>
 
-    <!-- Footer with ONLY Twitter and Telegram Social Media Links -->
+    <!-- Footer with ONLY Twitter and Telegram Social Media Links - Icons 5x Bigger -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
@@ -497,13 +503,13 @@ Here's the updated code with only the Twitter and Telegram social media icons in
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
                 </div>
                 <div class="flex space-x-6">
-                    <!-- Twitter/X Link -->
+                    <!-- Twitter/X Link - 5x bigger -->
                     <a href="https://x.com/barkdogmeme?s=11" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
-                        <i class="fab fa-twitter text-xl"></i>
+                        <i class="fab fa-twitter social-icon"></i>
                     </a>
-                    <!-- Telegram Link -->
+                    <!-- Telegram Link - 5x bigger -->
                     <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
-                        <i class="fab fa-telegram-plane text-xl"></i>
+                        <i class="fab fa-telegram-plane social-icon"></i>
                     </a>
                 </div>
             </div>
@@ -621,3 +627,117 @@ Here's the updated code with only the Twitter and Telegram social media icons in
                 } else {
                     nav.classList.remove('nav-scrolled');
                 }
+            }
+            
+            handleNavScroll();
+            window.addEventListener('scroll', handleNavScroll);
+            
+            // Smooth scroll to section function
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const navHeight = nav.offsetHeight;
+                    const sectionPosition = section.offsetTop - navHeight - 10;
+                    window.scrollTo({
+                        top: sectionPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Get all navigation buttons
+            const navButtons = document.querySelectorAll('[data-nav]');
+            
+            // Add click handlers to navigation elements
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = btn.getAttribute('data-nav');
+                    
+                    switch(target) {
+                        case 'home':
+                            scrollToSection('home');
+                            break;
+                        case 'whitepaper':
+                            openPdfViewer();
+                            break;
+                        case 'tokenomics':
+                            scrollToSection('tokenomics');
+                            break;
+                        case 'roadmap':
+                            scrollToSection('roadmap');
+                            break;
+                        case 'team':
+                            scrollToSection('team');
+                            break;
+                        case 'buy':
+                            scrollToSection('buy');
+                            break;
+                        default:
+                            if (target && document.getElementById(target)) {
+                                scrollToSection(target);
+                            }
+                    }
+                    
+                    // Update active state for nav links
+                    document.querySelectorAll('.nav-link-item').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    if (btn.classList.contains('nav-link-item')) {
+                        btn.classList.add('active');
+                    }
+                });
+            });
+            
+            // Highlight active section on scroll
+            const sections = ['home', 'tokenomics', 'roadmap', 'team', 'buy'];
+            const navLinks = document.querySelectorAll('.nav-link-item');
+            
+            function updateActiveSection() {
+                const scrollPosition = window.scrollY + nav.offsetHeight + 50;
+                
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const sectionTop = section.offsetTop;
+                        const sectionBottom = sectionTop + section.offsetHeight;
+                        
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                            navLinks.forEach(link => {
+                                const linkTarget = link.getAttribute('data-nav');
+                                if (linkTarget === sectionId) {
+                                    link.classList.add('active');
+                                } else {
+                                    link.classList.remove('active');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveSection);
+            updateActiveSection();
+            
+            // Interactive button alerts for demo (only for Buy button now)
+            const buyButtons = document.querySelectorAll('button');
+            buyButtons.forEach(btn => {
+                const btnText = btn.innerText;
+                if (!btn.hasAttribute('data-nav') && btnText.includes('Buy')) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showToast('🚀 BARK to the moon! Coming soon!');
+                    });
+                }
+            });
+            
+            console.log("🎉 $BARK Navigation fully functional!");
+            console.log("🖼️ Logo URL:", LOGO_PATH);
+            console.log("📄 Whitepaper will open in embedded viewer (no download required)");
+            console.log("🔗 Social links: Twitter and Telegram only - icons 5x bigger!");
+            console.log("📱 Join Community button links to Telegram");
+            console.log("🐕 Navigation logo hover effect: Zooms to 1.4x size!");
+        })();
+    </script>
+</body>
+</html>
