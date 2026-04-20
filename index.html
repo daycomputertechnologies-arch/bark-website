@@ -1,3 +1,6 @@
+Here's the updated code with only the Twitter and Telegram social media icons in the footer:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +100,6 @@
             object-fit: contain;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
-            /* Transparency fix - ensure no background */
             background: transparent;
             mix-blend-mode: normal;
             filter: drop-shadow(0 0 0 transparent);
@@ -115,7 +117,6 @@
         .logo-container:hover .logo-img {
             transform: scale(1.4);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            /* Ensure clean scaling without black box */
             image-rendering: crisp-edges;
             backface-visibility: hidden;
         }
@@ -487,7 +488,7 @@
         </div>
     </section>
 
-    <!-- Footer with Social Media Links and Hover Zoom Effect -->
+    <!-- Footer with ONLY Twitter and Telegram Social Media Links -->
     <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
@@ -503,14 +504,6 @@
                     <!-- Telegram Link -->
                     <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
                         <i class="fab fa-telegram-plane text-xl"></i>
-                    </a>
-                    <!-- Medium (placeholder - keep for future) -->
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
-                        <i class="fab fa-medium text-xl"></i>
-                    </a>
-                    <!-- GitHub (placeholder - keep for future) -->
-                    <a href="#" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
-                        <i class="fab fa-github text-xl"></i>
                     </a>
                 </div>
             </div>
@@ -628,117 +621,3 @@
                 } else {
                     nav.classList.remove('nav-scrolled');
                 }
-            }
-            
-            handleNavScroll();
-            window.addEventListener('scroll', handleNavScroll);
-            
-            // Smooth scroll to section function
-            function scrollToSection(sectionId) {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    const navHeight = nav.offsetHeight;
-                    const sectionPosition = section.offsetTop - navHeight - 10;
-                    window.scrollTo({
-                        top: sectionPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-            
-            // Get all navigation buttons
-            const navButtons = document.querySelectorAll('[data-nav]');
-            
-            // Add click handlers to navigation elements
-            navButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const target = btn.getAttribute('data-nav');
-                    
-                    switch(target) {
-                        case 'home':
-                            scrollToSection('home');
-                            break;
-                        case 'whitepaper':
-                            openPdfViewer();
-                            break;
-                        case 'tokenomics':
-                            scrollToSection('tokenomics');
-                            break;
-                        case 'roadmap':
-                            scrollToSection('roadmap');
-                            break;
-                        case 'team':
-                            scrollToSection('team');
-                            break;
-                        case 'buy':
-                            scrollToSection('buy');
-                            break;
-                        default:
-                            if (target && document.getElementById(target)) {
-                                scrollToSection(target);
-                            }
-                    }
-                    
-                    // Update active state for nav links
-                    document.querySelectorAll('.nav-link-item').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    if (btn.classList.contains('nav-link-item')) {
-                        btn.classList.add('active');
-                    }
-                });
-            });
-            
-            // Highlight active section on scroll
-            const sections = ['home', 'tokenomics', 'roadmap', 'team', 'buy'];
-            const navLinks = document.querySelectorAll('.nav-link-item');
-            
-            function updateActiveSection() {
-                const scrollPosition = window.scrollY + nav.offsetHeight + 50;
-                
-                sections.forEach(sectionId => {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        const sectionTop = section.offsetTop;
-                        const sectionBottom = sectionTop + section.offsetHeight;
-                        
-                        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                            navLinks.forEach(link => {
-                                const linkTarget = link.getAttribute('data-nav');
-                                if (linkTarget === sectionId) {
-                                    link.classList.add('active');
-                                } else {
-                                    link.classList.remove('active');
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-            
-            window.addEventListener('scroll', updateActiveSection);
-            updateActiveSection();
-            
-            // Interactive button alerts for demo (only for Buy button now)
-            const buyButtons = document.querySelectorAll('button');
-            buyButtons.forEach(btn => {
-                const btnText = btn.innerText;
-                if (!btn.hasAttribute('data-nav') && btnText.includes('Buy')) {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        showToast('🚀 BARK to the moon! Coming soon!');
-                    });
-                }
-            });
-            
-            console.log("🎉 $BARK Navigation fully functional!");
-            console.log("🖼️ Logo URL:", LOGO_PATH);
-            console.log("📄 Whitepaper will open in embedded viewer (no download required)");
-            console.log("🔗 Social links: Twitter and Telegram added to footer");
-            console.log("📱 Join Community button now links to Telegram");
-            console.log("🐕 Navigation logo hover effect: Zooms to 1.4x size!");
-        })();
-    </script>
-</body>
-</html>
