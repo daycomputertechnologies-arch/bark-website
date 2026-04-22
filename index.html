@@ -168,6 +168,46 @@
             display: inline-block;
             text-decoration: none;
         }
+        /* Contract address styling */
+        .contract-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            backdrop-filter: blur(4px);
+            margin-top: 1rem;
+        }
+        .contract-address {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            color: #0ea5e9;
+        }
+        .copy-btn {
+            background: rgba(14, 165, 233, 0.2);
+            border: none;
+            color: #0ea5e9;
+            cursor: pointer;
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .copy-btn:hover {
+            background: #0ea5e9;
+            color: white;
+            transform: scale(1.05);
+        }
+        .copy-btn.copied {
+            background: #10b981;
+            color: white;
+        }
         /* Modal styles for PDF viewer */
         .modal {
             display: none;
@@ -291,7 +331,7 @@
                 <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
                     $BARK - Where Every Transaction Barks, Every Meme Roars, and Every Dog Gets a Voice!
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
                     <!-- Get $BARK Now Button - Links to BigFiveSwap -->
                     <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link">
                         <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
@@ -301,6 +341,17 @@
                     <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300" data-nav="whitepaper">
                         <i class="fas fa-file-alt mr-2"></i> Read Whitepaper
                     </button>
+                </div>
+                
+                <!-- Contract Address Section with Copy Button -->
+                <div class="flex justify-center mt-4">
+                    <div class="contract-container">
+                        <span class="text-gray-300 text-sm">Contract Address:</span>
+                        <span id="contractAddress" class="contract-address">0x0000000000000000000000000000000000000000</span>
+                        <button id="copyContractBtn" class="copy-btn" onclick="copyContractAddress()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
@@ -534,6 +585,30 @@
 
     <!-- JavaScript for Navigation Functionality -->
     <script>
+        // Contract address copy function
+        function copyContractAddress() {
+            const contractAddress = document.getElementById('contractAddress').innerText;
+            const copyBtn = document.getElementById('copyContractBtn');
+            
+            navigator.clipboard.writeText(contractAddress).then(() => {
+                // Show success state
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                // Show toast notification
+                showToast('✅ Contract address copied to clipboard!');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                showToast('❌ Failed to copy address', true);
+            });
+        }
+        
         (function() {
             // ============================================
             // CONFIGURATION - RAW URLs from GitHub
@@ -593,8 +668,8 @@
                 }
             });
             
-            // Function to show toast notification
-            function showToast(message, isError = false) {
+            // Function to show toast notification (make it global for copy function)
+            window.showToast = function(message, isError = false) {
                 const toast = document.createElement('div');
                 toast.className = 'toast-notification';
                 toast.style.borderLeftColor = isError ? '#ef4444' : '#0ea5e9';
@@ -606,7 +681,7 @@
                 `;
                 document.body.appendChild(toast);
                 setTimeout(() => toast.remove(), 4000);
-            }
+            };
             
             // Set logo image in navigation
             const navLogo = document.getElementById('navLogo');
@@ -616,7 +691,7 @@
                 };
                 navLogo.onerror = function() {
                     console.warn('⚠️ Navigation logo failed to load from:', LOGO_PATH);
-                    showToast('⚠️ Logo not found, using fallback icon', true);
+                    window.showToast('⚠️ Logo not found, using fallback icon', true);
                 };
                 navLogo.src = LOGO_PATH;
             }
@@ -626,7 +701,7 @@
             if (footerLogo) {
                 footerLogo.onload = function() {
                     console.log('✅ Footer logo loaded successfully from:', LOGO_PATH);
-                    showToast('🚀 BARK website loaded!');
+                    window.showToast('🚀 BARK website loaded!');
                 };
                 footerLogo.onerror = function() {
                     console.warn('⚠️ Footer logo failed to load from:', LOGO_PATH);
@@ -742,6 +817,7 @@
             console.log("📱 Join Community button links to Telegram");
             console.log("🛒 Buy buttons now link to BigFiveSwap:", BUY_LINK);
             console.log("🐕 Navigation logo hover effect: Zooms to 1.4x size!");
+            console.log("📋 Contract address copy feature added!");
         })();
     </script>
 </body>
