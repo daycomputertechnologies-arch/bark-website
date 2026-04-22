@@ -163,6 +163,11 @@
             transform: scale(1.2);
             filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
         }
+        /* Buy button link styling */
+        .buy-link {
+            display: inline-block;
+            text-decoration: none;
+        }
         /* Modal styles for PDF viewer */
         .modal {
             display: none;
@@ -266,10 +271,12 @@
                 <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="team">Team</button>
             </div>
             
-            <!-- Buy Button -->
-            <button class="nav-button bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect font-semibold" data-nav="buy">
-                Buy $BARK
-            </button>
+            <!-- Buy Button - Now links to BigFiveSwap -->
+            <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link">
+                <button class="nav-button bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect font-semibold">
+                    Buy $BARK
+                </button>
+            </a>
         </div>
         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-bark-blue to-transparent opacity-60"></div>
     </nav>
@@ -285,9 +292,12 @@
                     $BARK - Where Every Transaction Barks, Every Meme Roars, and Every Dog Gets a Voice!
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-                    <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
-                        <i class="fas fa-paw mr-2"></i> Get $BARK Now
-                    </button>
+                    <!-- Get $BARK Now Button - Links to BigFiveSwap -->
+                    <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link">
+                        <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+                            <i class="fas fa-paw mr-2"></i> Get $BARK Now
+                        </button>
+                    </a>
                     <button class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300" data-nav="whitepaper">
                         <i class="fas fa-file-alt mr-2"></i> Read Whitepaper
                     </button>
@@ -484,9 +494,12 @@
                 Become part of the loudest, most enthusiastic dog in the crypto yard
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
-                    <i class="fas fa-paw mr-2"></i> Buy $BARK Now
-                </button>
+                <!-- Buy $BARK Now Button - Links to BigFiveSwap -->
+                <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link">
+                    <button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect">
+                        <i class="fas fa-paw mr-2"></i> Buy $BARK Now
+                    </button>
+                </a>
                 <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300 inline-flex items-center justify-center">
                     <i class="fab fa-telegram-plane mr-2"></i> Join Community
                 </a>
@@ -533,6 +546,9 @@
             const WHITEPAPER_RAW_URL = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
             // Google Docs Viewer URL - displays PDF in browser without downloading
             const WHITEPAPER_VIEWER_URL = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(WHITEPAPER_RAW_URL)}`;
+            
+            // BUY LINK - BigFiveSwap
+            const BUY_LINK = 'https://bigfiveswap.io/';
             
             // ============================================
             // END OF CONFIGURATION
@@ -719,23 +735,12 @@
             window.addEventListener('scroll', updateActiveSection);
             updateActiveSection();
             
-            // Interactive button alerts for demo (only for Buy button now)
-            const buyButtons = document.querySelectorAll('button');
-            buyButtons.forEach(btn => {
-                const btnText = btn.innerText;
-                if (!btn.hasAttribute('data-nav') && btnText.includes('Buy')) {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        showToast('🚀 BARK to the moon! Coming soon!');
-                    });
-                }
-            });
-            
             console.log("🎉 $BARK Navigation fully functional!");
             console.log("🖼️ Logo URL:", LOGO_PATH);
             console.log("📄 Whitepaper will open in embedded viewer (no download required)");
             console.log("🔗 Social links: Twitter and Telegram only - icons 5x bigger!");
             console.log("📱 Join Community button links to Telegram");
+            console.log("🛒 Buy buttons now link to BigFiveSwap:", BUY_LINK);
             console.log("🐕 Navigation logo hover effect: Zooms to 1.4x size!");
         })();
     </script>
