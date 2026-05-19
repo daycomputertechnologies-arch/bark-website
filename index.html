@@ -208,7 +208,7 @@
             background: #10b981;
             color: white;
         }
-        /* Modal styles for PDF viewer */
+        /* Modal styles for PDF viewer - FIXED for direct PDF loading */
         .modal {
             display: none;
             position: fixed;
@@ -326,6 +326,23 @@
             font-size: 0.75rem;
             color: #0ea5e9;
             border: 1px solid rgba(14, 165, 233, 0.4);
+        }
+        /* PDF fallback message */
+        .pdf-error-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .pdf-error-fallback a {
+            color: #0ea5e9;
+            margin-top: 15px;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -474,7 +491,7 @@
         </div>
     </section>
 
-    <!-- Roadmap Section with Completion Ticks -->
+    <!-- Roadmap Section with Completion Ticks (Stage 1 all ticks, Stage 2 only first tick) -->
     <section id="roadmap" class="relative z-10 py-20 scroll-mt-20">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -604,7 +621,7 @@
     </footer>
 
     <script>
-        // Contract address copy
+        // Contract address copy function
         function copyContractAddress() {
             const contractAddress = document.getElementById('contractAddress').innerText;
             const copyBtn = document.getElementById('copyContractBtn');
@@ -616,6 +633,7 @@
                 setTimeout(() => { copyBtn.innerHTML = originalText; copyBtn.classList.remove('copied'); }, 2000);
             }).catch(() => showToast('❌ Failed to copy address', true));
         }
+        
         window.showToast = function(message, isError = false) {
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
@@ -624,23 +642,70 @@
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 4000);
         };
+        
         (function() {
-            const LOGO_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png';
+            // ============================================
+            // WHITEPAPER FIX - Direct PDF loading without Google Docs
+            // ============================================
             const WHITEPAPER_RAW_URL = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
-            const WHITEPAPER_VIEWER_URL = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(WHITEPAPER_RAW_URL)}`;
+            
+            // Modal elements
             const modal = document.getElementById('pdfModal');
             const pdfFrame = document.getElementById('pdfFrame');
             const closeBtn = document.querySelector('.close-modal');
-            function openPdfViewer() { pdfFrame.src = WHITEPAPER_VIEWER_URL; modal.style.display = 'block'; document.body.style.overflow = 'hidden'; showToast('📄 Loading Whitepaper...'); }
-            function closeModal() { modal.style.display = 'none'; pdfFrame.src = ''; document.body.style.overflow = 'auto'; }
-            if(closeBtn) closeBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-            document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.style.display === 'block') closeModal(); });
+            
+            // UPDATED: openPdfViewer loads PDF directly from raw URL (fixes loading issue)
+            function openPdfViewer() {
+                // Direct PDF source - most reliable for raw GitHub PDFs
+                pdfFrame.src = WHITEPAPER_RAW_URL;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                showToast('📄 Loading Whitepaper...');
+                
+                // Optional: Handle iframe load error (CORS or network)
+                pdfFrame.onerror = function() {
+                    showToast('⚠️ Whitepaper failed to load. Try downloading directly.', true);
+                };
+            }
+            
+            function closeModal() {
+                modal.style.display = 'none';
+                pdfFrame.src = ''; // Stop PDF loading when closed
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Close modal when clicking X
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+            
+            // Close modal when clicking outside the content
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+            
+            // Navigation and logo setup
+            const LOGO_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png';
+            
             document.querySelectorAll('[data-nav]').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     const target = btn.getAttribute('data-nav');
-                    if(target === 'whitepaper') openPdfViewer();
+                    if(target === 'whitepaper') {
+                        openPdfViewer();
+                    } 
+                    else if(target === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                     else if(target && document.getElementById(target)) {
                         const nav = document.getElementById('mainNav');
                         const section = document.getElementById(target);
@@ -649,11 +714,23 @@
                     }
                 });
             });
-            const navLogo = document.getElementById('navLogo'); if(navLogo) navLogo.src = LOGO_PATH;
-            const footerLogo = document.getElementById('footerLogo'); if(footerLogo) footerLogo.src = LOGO_PATH;
+            
+            // Set logo images
+            const navLogo = document.getElementById('navLogo');
+            if (navLogo) navLogo.src = LOGO_PATH;
+            const footerLogo = document.getElementById('footerLogo');
+            if (footerLogo) footerLogo.src = LOGO_PATH;
+            
+            // Navbar scroll effect
             const nav = document.getElementById('mainNav');
-            window.addEventListener('scroll', () => { if(window.scrollY > 20) nav.classList.add('nav-scrolled'); else nav.classList.remove('nav-scrolled'); });
-            showToast('🐕 $BARK Roadmap: Stage 1 complete, Stage 2 DEX Listing ticked!');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) nav.classList.add('nav-scrolled');
+                else nav.classList.remove('nav-scrolled');
+            });
+            
+            // Success notification for roadmap ticks
+            showToast('🐕 $BARK Roadmap: Stage 1 complete, Stage 2 DEX Listing completed!');
+            console.log('✅ Whitepaper fix applied: Direct PDF loading from RAW URL');
         })();
     </script>
 </body>
