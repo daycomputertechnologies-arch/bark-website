@@ -1,327 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$BARK - The Loudest Dog in the Yard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'bark-blue': '#0ea5e9',
-                        'bark-dark': '#0f172a',
-                        'bark-purple': '#7c3aed',
-                        'bark-glow': '#0ea5e9',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate'
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' }
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 10px #0ea5e9' },
-                            '100%': { boxShadow: '0 0 30px #0ea5e9, 0 0 60px #7c3aed' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html { scroll-behavior: smooth; }
-        .nav-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .nav-scrolled { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; background-color: #020617 !important; backdrop-filter: blur(16px); border-bottom-width: 1px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5); }
-        .nav-scrolled .logo-img { height: 64px !important; width: auto !important; }
-        .nav-scrolled .logo-text { font-size: 1.25rem !important; }
-        .nav-scrolled .nav-button { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
-        .glow-effect { filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5)); }
-        .floating-element { animation: float 8s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        .bg-gradient-bark { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0ea5e9 100%); }
-        .nav-link-item.active { color: #0ea5e9; text-shadow: 0 0 8px rgba(14, 165, 233, 0.5); }
-        .nav-link-item.active::after { width: 100%; background-color: #0ea5e9; }
-        .logo-img { height: 80px; width: auto; object-fit: contain; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: block; background: transparent; }
-        .logo-container { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: transparent; }
-        .logo-container:hover .logo-img { transform: scale(1.4); }
-        .logo-container:hover .logo-text { transform: translateX(12px); }
-        .logo-text { display: inline-block; line-height: 1; vertical-align: middle; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .footer-logo-img { height: 80px; width: auto; object-fit: contain; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: block; }
-        .footer-logo-container { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .footer-logo-container:hover .footer-logo-img { transform: scale(2); }
-        .footer-logo-container:hover span { transform: translateX(20px); }
-        .social-icon { font-size: 5rem !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .social-icon:hover { transform: scale(1.2); filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5)); }
-        .buy-link { display: inline-block; text-decoration: none; }
-        .contract-container { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(14, 165, 233, 0.1); padding: 0.5rem 1rem; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); backdrop-filter: blur(4px); margin-top: 1rem; }
-        .contract-address { font-family: 'Courier New', monospace; font-size: 0.9rem; letter-spacing: 0.5px; color: #0ea5e9; }
-        .copy-btn { background: rgba(14, 165, 233, 0.2); border: none; color: #0ea5e9; cursor: pointer; padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 0.8rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.3rem; }
-        .copy-btn:hover { background: #0ea5e9; color: white; transform: scale(1.05); }
-        .copy-btn.copied { background: #10b981; color: white; }
-        
-        /* PDF Modal - Embedded Viewer without download */
-        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.96); backdrop-filter: blur(12px); }
-        .modal-content { position: relative; margin: 1% auto; width: 92%; height: 92%; background: #1e293b; border-radius: 20px; overflow: hidden; box-shadow: 0 0 60px rgba(14, 165, 233, 0.4); border: 1px solid rgba(14, 165, 233, 0.3); }
-        .close-modal { position: absolute; top: 15px; right: 25px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 10000; transition: all 0.3s ease; background: rgba(0,0,0,0.6); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .close-modal:hover { color: #0ea5e9; transform: scale(1.1); background: rgba(14,165,233,0.2); }
-        .pdf-frame { width: 100%; height: 100%; border: none; background: #fff; }
-        
-        /* Toast */
-        .toast-notification { position: fixed; bottom: 20px; right: 20px; background: #1e293b; border-left: 4px solid #0ea5e9; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        
-        /* Roadmap tick styles */
-        .checklist-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; transition: all 0.2s ease; }
-        .check-circle { width: 24px; height: 24px; border-radius: 50%; background: rgba(14, 165, 233, 0.15); border: 2px solid rgba(14, 165, 233, 0.4); display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; flex-shrink: 0; }
-        .check-circle.completed { background: #0ea5e9; border-color: #0ea5e9; box-shadow: 0 0 10px rgba(14, 165, 233, 0.6); }
-        .check-circle i { font-size: 12px; color: white; }
-        .task-text { color: #e2e8f0; font-size: 0.95rem; }
-        .task-text.completed { color: #0ea5e9; text-shadow: 0 0 2px rgba(14,165,233,0.3); }
-        .stage-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .stage-badge { background: rgba(14, 165, 233, 0.2); border-radius: 40px; padding: 4px 12px; font-size: 0.75rem; color: #0ea5e9; border: 1px solid rgba(14, 165, 233, 0.4); }
-        
-        /* PDF Embed fallback message */
-        .pdf-loading { display: flex; align-items: center; justify-content: center; height: 100%; background: #0f172a; color: white; flex-direction: column; gap: 15px; }
-        .spinner { width: 50px; height: 50px; border: 4px solid rgba(14,165,233,0.2); border-top: 4px solid #0ea5e9; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Offline</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #ff0000;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .message {
+      font-size: 4vw;
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: 1.5;
+      padding: 30px;
+      border: 5px solid #ff0000;
+      box-shadow: 0 0 25px #ff0000;
+      background: rgba(255, 0, 0, 0.08);
+    }
+  </style>
 </head>
-<body class="bg-bark-dark text-white min-h-screen overflow-x-hidden">
-    <!-- Animated Background -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-bark-glow rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element animate-bounce"></div>
-        <div class="absolute top-1/3 right-1/4 w-72 h-72 bg-bark-purple rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element animate-pulse"></div>
-        <div class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-bark-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 floating-element"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-pulse-slow"></div>
-    </div>
 
-    <!-- PDF Modal - EMBEDDED VIEWER (NO DOWNLOAD REQUIRED) -->
-    <div id="pdfModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <div class="modal-content">
-            <iframe id="pdfFrame" class="pdf-frame" src="about:blank"></iframe>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 bg-[#030712] border-b border-bark-blue/40 backdrop-blur-md nav-transition py-4">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="logo-container group" data-nav="home">
-                <img id="navLogo" class="logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
-                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple logo-text nav-transition">BARK</span>
-            </div>
-            <div class="hidden md:flex space-x-8">
-                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="home">Home</button>
-                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="whitepaper">Whitepaper</button>
-                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="tokenomics">Tokenomics</button>
-                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="roadmap">Roadmap</button>
-                <button class="nav-link-item text-gray-200 hover:text-bark-blue transition-all duration-300 font-medium tracking-wide relative after:absolute after:bottom-[-5px] after:left-0 after:w-0 after:h-0.5 after:bg-bark-blue after:transition-all after:duration-300 hover:after:w-full" data-nav="team">Team</button>
-            </div>
-            <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link">
-                <button class="nav-button bg-gradient-to-r from-bark-blue to-bark-purple text-white px-6 py-2 rounded-full hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect font-semibold">Buy $BARK</button>
-            </a>
-        </div>
-        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-bark-blue to-transparent opacity-60"></div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative z-10 pt-32 pb-32 scroll-mt-20">
-        <div class="container mx-auto px-4 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">The <span class="bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">Loudest</span> Dog in the Yard</h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">$BARK - Where Every Transaction Barks, Every Meme Roars, and Every Dog Gets a Voice!</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
-                    <a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link"><button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect"><i class="fas fa-paw mr-2"></i> Get $BARK Now</button></a>
-                    <button class="read-whitepaper-btn border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300" data-nav="whitepaper"><i class="fas fa-file-alt mr-2"></i> Read Whitepaper</button>
-                </div>
-                <div class="flex justify-center mt-4">
-                    <div class="contract-container">
-                        <span class="text-gray-300 text-sm">Contract Address:</span>
-                        <span id="contractAddress" class="contract-address">0xbb8Eca623126F3Ad0c7BeF5F29d90c3C5f9Bff97</span>
-                        <button id="copyContractBtn" class="copy-btn" onclick="copyContractAddress()"><i class="fas fa-copy"></i> Copy</button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform"><i class="fas fa-volume-up text-4xl text-bark-blue mb-4"></i><h3 class="text-xl font-bold mb-2">Maximum Volume</h3><p class="text-gray-400">We're all about making noise, not hiding behind silence.</p></div>
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform"><i class="fas fa-burn text-4xl text-bark-purple mb-4"></i><h3 class="text-xl font-bold mb-2">Perpetual Growth</h3><p class="text-gray-400">Burned tokens ensure scarcity and long-term value.</p></div>
-                    <div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 hover:border-bark-blue/60 transition-all duration-300 hover:scale-105 transform"><i class="fas fa-users text-4xl text-bark-blue mb-4"></i><h3 class="text-xl font-bold mb-2">Community Focused</h3><p class="text-gray-400">Built for the community, by the community.</p></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tokenomics -->
-    <section id="tokenomics" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16"><h2 class="text-4xl font-bold mb-4">Tokenomics</h2><p class="text-xl text-gray-300 max-w-2xl mx-auto">Transparent distribution designed for maximum impact</p></div>
-            <div class="max-w-6xl mx-auto"><div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"><div><div class="space-y-6"><div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all"><div class="flex items-center"><div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div><span>Public Launch (60%)</span></div><span class="font-bold">600,000,000</span></div><div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all"><div class="flex items-center"><div class="w-4 h-4 bg-bark-purple rounded-full mr-3"></div><span>Marketing & Hype (20%)</span></div><span class="font-bold">200,000,000</span></div><div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all"><div class="flex items-center"><div class="w-4 h-4 bg-blue-400 rounded-full mr-3"></div><span>The Dog Park (10%)</span></div><span class="font-bold">100,000,000</span></div><div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all"><div class="flex items-center"><div class="w-4 h-4 bg-purple-400 rounded-full mr-3"></div><span>Dev Kennel (5%)</span></div><span class="font-bold">50,000,000</span></div><div class="flex justify-between items-center p-4 bg-bark-dark/50 rounded-lg border border-bark-blue/30 hover:border-bark-blue transition-all"><div class="flex items-center"><div class="w-4 h-4 bg-bark-blue rounded-full mr-3"></div><span>Charity – Animal Shelters (5%)</span></div><span class="font-bold">50,000,000</span></div></div></div><div class="bg-bark-dark/50 backdrop-blur-sm p-8 rounded-xl border border-bark-blue/30 text-center hover:shadow-xl transition-all duration-300"><h3 class="text-2xl font-bold mb-4">3% Transaction Tax</h3><div class="grid grid-cols-3 gap-4 mb-6"><div class="p-4 bg-bark-blue/20 rounded-lg hover:bg-bark-blue/30 transition-all"><div class="text-3xl font-bold mb-2">1%</div><div class="text-sm">Burn</div></div><div class="p-4 bg-bark-purple/20 rounded-lg hover:bg-bark-purple/30 transition-all"><div class="text-3xl font-bold mb-2">1%</div><div class="text-sm">Liquidity</div></div><div class="p-4 bg-blue-400/20 rounded-lg hover:bg-blue-400/30 transition-all"><div class="text-3xl font-bold mb-2">1%</div><div class="text-sm">Marketing</div></div></div><div class="text-lg font-semibold">Total Supply: <span class="text-bark-blue">1,000,000,000</span></div></div></div></div>
-        </div>
-    </section>
-
-    <!-- Roadmap with ticks: Stage 1 ALL completed, Stage 2 only first tick (DEX Listing), Stage 3 none -->
-    <section id="roadmap" class="relative z-10 py-20 scroll-mt-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16"><h2 class="text-4xl font-bold mb-4">Roadmap</h2><p class="text-xl text-gray-300 max-w-2xl mx-auto">From puppy to powerhouse — milestones with bark-proof verification</p></div>
-            <div class="max-w-4xl mx-auto"><div class="relative"><div class="absolute left-4 top-0 bottom-0 w-0.5 bg-bark-blue/50 transform translate-x-1/2"></div><div class="space-y-12">
-                <!-- Phase 1: ALL ticks -->
-                <div class="relative pl-12 group"><div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-blue flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg"><i class="fas fa-paw text-white text-sm"></i></div><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all"><div class="stage-header mb-4"><h3 class="text-2xl font-bold text-bark-blue">Phase 1: The Puppy Stage</h3><span class="stage-badge"><i class="fas fa-check-circle mr-1"></i> Stage Complete</span></div><div class="space-y-2"><div class="checklist-item"><div class="check-circle completed"><i class="fas fa-check"></i></div><span class="task-text completed">Smart Contract Deployment</span></div><div class="checklist-item"><div class="check-circle completed"><i class="fas fa-check"></i></div><span class="task-text completed">Website Launch (with 100% more dog GIFs)</span></div><div class="checklist-item"><div class="check-circle completed"><i class="fas fa-check"></i></div><span class="task-text completed">Community Building on X and Telegram</span></div></div></div></div>
-                <!-- Phase 2: ONLY first item ticked -->
-                <div class="relative pl-12 group"><div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-bark-purple flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg"><i class="fas fa-running text-white text-sm"></i></div><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all"><h3 class="text-2xl font-bold mb-4 text-bark-purple">Phase 2: Zoomies</h3><div class="space-y-2"><div class="checklist-item"><div class="check-circle completed"><i class="fas fa-check"></i></div><span class="task-text completed">DEX Listing (on Bigfiveswap DEX )</span></div><div class="checklist-item"><div class="check-circle"></div><span class="task-text">First "Meme-Off" competition</span></div><div class="checklist-item"><div class="check-circle"></div><span class="task-text">Initial donation to local animal shelters</span></div></div></div></div>
-                <!-- Phase 3: No ticks -->
-                <div class="relative pl-12 group"><div class="absolute left-0 top-2 w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg"><i class="fas fa-paw text-white text-sm"></i></div><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 group-hover:border-bark-blue/80 transition-all"><h3 class="text-2xl font-bold mb-4 text-blue-400">Phase 3: The Big Bark</h3><div class="space-y-2"><div class="checklist-item"><div class="check-circle"></div><span class="task-text">Centralized Exchange (CEX) listings</span></div><div class="checklist-item"><div class="check-circle"></div><span class="task-text">$BARK Merch Store (Dog collars included)</span></div><div class="checklist-item"><div class="check-circle"></div><span class="task-text">Partnerships with major "Pet-fluencers"</span></div></div></div></div>
-            </div></div></div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
-        <div class="container mx-auto px-4"><div class="text-center mb-16"><h2 class="text-4xl font-bold mb-4">Our Pack</h2><p class="text-xl text-gray-300 max-w-2xl mx-auto">The dedicated team behind $BARK</p></div><div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300"><div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🐕</div><h3 class="text-xl font-bold mb-2">Max "Alpha" BARK</h3><p class="text-bark-blue">Lead Developer</p><p class="text-gray-400 text-sm mt-2">10+ years in blockchain</p></div><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300"><div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🐩</div><h3 class="text-xl font-bold mb-2">Sarah "The Growl"</h3><p class="text-bark-blue">Marketing Director</p><p class="text-gray-400 text-sm mt-2">Meme strategist expert</p></div><div class="bg-bark-dark/50 backdrop-blur-sm p-6 rounded-xl border border-bark-blue/30 text-center hover:scale-105 transition-all duration-300"><div class="w-32 h-32 bg-gradient-to-r from-bark-blue to-bark-purple rounded-full mx-auto mb-4 flex items-center justify-center text-5xl font-bold">🦮</div><h3 class="text-xl font-bold mb-2">James "BarkWhale"</h3><p class="text-bark-blue">Community Lead</p><p class="text-gray-400 text-sm mt-2">Building the loudest pack</p></div></div></div>
-    </section>
-
-    <!-- CTA with Whitepaper button (bottom) -->
-    <section id="buy" class="relative z-10 py-20 bg-gradient-bark scroll-mt-20">
-        <div class="container mx-auto px-4 text-center"><h2 class="text-4xl font-bold mb-6">Join the Pack Today!</h2><p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Become part of the loudest, most enthusiastic dog in the crypto yard</p><div class="flex flex-col sm:flex-row justify-center gap-4"><a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link"><button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect"><i class="fas fa-paw mr-2"></i> Buy $BARK Now</button></a><button class="read-whitepaper-btn border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300 inline-flex items-center justify-center" data-nav="whitepaper"><i class="fas fa-file-alt mr-2"></i> Read Whitepaper</button></div></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12"><div class="container mx-auto px-4"><div class="flex flex-col md:flex-row justify-between items-center"><div class="footer-logo-container group mb-6 md:mb-0" data-nav="home"><img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo"><span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span></div><div class="flex space-x-6"><a href="https://x.com/barkdogmeme?s=11" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-twitter social-icon"></i></a><a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-telegram-plane social-icon"></i></a></div></div><div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500 text-sm"><p>&copy; 2026 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p></div></div></footer>
-
-    <script>
-        // Copy contract address
-        function copyContractAddress() {
-            const contractAddress = document.getElementById('contractAddress').innerText;
-            const copyBtn = document.getElementById('copyContractBtn');
-            navigator.clipboard.writeText(contractAddress).then(() => {
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                copyBtn.classList.add('copied');
-                showToast('✅ Contract address copied to clipboard!');
-                setTimeout(() => { copyBtn.innerHTML = originalText; copyBtn.classList.remove('copied'); }, 2000);
-            }).catch(() => showToast('❌ Failed to copy address', true));
-        }
-        
-        window.showToast = function(message, isError = false) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            toast.style.borderLeftColor = isError ? '#ef4444' : '#0ea5e9';
-            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} ${isError ? 'text-red-400' : 'text-bark-blue'}"></i><span class="text-sm">${message}</span></div>`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-        };
-        
-        (function() {
-            // WHITEPAPER FIX - Using Google Docs Viewer for reliable in-browser viewing without download
-            // This displays PDF directly in browser without forcing download
-            const WHITEPAPER_RAW = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
-            // Using Google Docs embedded viewer - displays PDF in browser, no download required
-            const PDF_VIEWER_URL = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(WHITEPAPER_RAW)}`;
-            
-            const modal = document.getElementById('pdfModal');
-            const pdfFrame = document.getElementById('pdfFrame');
-            const closeBtn = document.querySelector('.close-modal');
-            
-            // Open PDF in modal (embedded viewer - NO DOWNLOAD)
-            function openPdfViewer() {
-                // Set iframe source to Google Docs viewer which displays PDF inline
-                pdfFrame.src = PDF_VIEWER_URL;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                showToast('📄 Loading Whitepaper... Please wait.');
-                
-                // Handle potential iframe load error
-                pdfFrame.onload = function() {
-                    console.log('PDF viewer loaded');
-                };
-                pdfFrame.onerror = function() {
-                    // Fallback: try direct PDF if viewer fails
-                    showToast('⚠️ Using direct PDF view...', true);
-                    pdfFrame.src = WHITEPAPER_RAW;
-                };
-            }
-            
-            function closeModal() {
-                modal.style.display = 'none';
-                pdfFrame.src = 'about:blank';
-                document.body.style.overflow = 'auto';
-            }
-            
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
-            document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.style.display === 'block') closeModal(); });
-            
-            // Attach to all whitepaper buttons (nav and bottom CTA)
-            const whitepaperTriggers = document.querySelectorAll('[data-nav="whitepaper"]');
-            whitepaperTriggers.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openPdfViewer();
-                });
-            });
-            
-            // Also handle "Read Whitepaper" buttons explicitly
-            document.querySelectorAll('.read-whitepaper-btn').forEach(btn => {
-                if(!btn.hasAttribute('data-nav')) {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        openPdfViewer();
-                    });
-                }
-            });
-            
-            // Navigation scroll & logo
-            const nav = document.getElementById('mainNav');
-            window.addEventListener('scroll', () => { if(window.scrollY > 20) nav.classList.add('nav-scrolled'); else nav.classList.remove('nav-scrolled'); });
-            
-            const LOGO_PATH = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png';
-            const navLogo = document.getElementById('navLogo'); if(navLogo) navLogo.src = LOGO_PATH;
-            const footerLogo = document.getElementById('footerLogo'); if(footerLogo) footerLogo.src = LOGO_PATH;
-            
-            // Section scrolling for other nav items
-            document.querySelectorAll('[data-nav]').forEach(btn => {
-                const targetId = btn.getAttribute('data-nav');
-                if(targetId && targetId !== 'whitepaper') {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const section = document.getElementById(targetId);
-                        if(section) {
-                            const navHeight = nav.offsetHeight;
-                            window.scrollTo({ top: section.offsetTop - navHeight - 10, behavior: 'smooth' });
-                        }
-                    });
-                }
-            });
-            
-            // Active section highlight
-            const sections = ['home', 'tokenomics', 'roadmap', 'team', 'buy'];
-            const navLinks = document.querySelectorAll('.nav-link-item');
-            function updateActiveSection() {
-                const scrollPos = window.scrollY + nav.offsetHeight + 50;
-                sections.forEach(sectionId => {
-                    const section = document.getElementById(sectionId);
-                    if(section) {
-                        const top = section.offsetTop;
-                        const bottom = top + section.offsetHeight;
-                        if(scrollPos >= top && scrollPos < bottom) {
-                            navLinks.forEach(link => {
-                                if(link.getAttribute('data-nav') === sectionId) link.classList.add('active');
-                                else link.classList.remove('active');
-                            });
-                        }
-                    }
-                });
-            }
-            window.addEventListener('scroll', updateActiveSection);
-            updateActiveSection();
-            
-            showToast('🐕 $BARK ready! Whitepaper opens in embedded viewer — no download needed.');
-        })();
-    </script>
+<body>
+  <div class="message">
+    WEBSITE HAS BEEN PUT OFFLINE <br>
+    DUE TO OUTSTANDING FEE SUBSCRIPTIONS!
+  </div>
 </body>
 </html>
