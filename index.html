@@ -190,8 +190,38 @@
         <div class="container mx-auto px-4 text-center"><h2 class="text-4xl font-bold mb-6">Join the Pack Today!</h2><p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Become part of the loudest, most enthusiastic dog in the crypto yard</p><div class="flex flex-col sm:flex-row justify-center gap-4"><a href="https://bigfiveswap.io/" target="_blank" rel="noopener noreferrer" class="buy-link"><button class="bg-gradient-to-r from-bark-blue to-bark-purple text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-bark-purple hover:to-bark-blue transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect"><i class="fas fa-paw mr-2"></i> Buy $BARK Now</button></a><button class="read-whitepaper-btn border-2 border-bark-blue text-bark-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-bark-blue hover:text-white transition-all duration-300 inline-flex items-center justify-center" data-nav="whitepaper"><i class="fas fa-file-alt mr-2"></i> Read Whitepaper</button></div></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12"><div class="container mx-auto px-4"><div class="flex flex-col md:flex-row justify-between items-center"><div class="footer-logo-container group mb-6 md:mb-0" data-nav="home"><img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo"><span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span></div><div class="flex space-x-6"><a href="https://x.com/barkdogmeme?s=11" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-twitter social-icon"></i></a><a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block"><i class="fab fa-telegram-plane social-icon"></i></a></div></div><div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500 text-sm"><p>&copy; 2026 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p></div></div></footer>
+    <!-- Footer: Added Facebook & TikTok links with icons next to Twitter and Telegram -->
+    <footer class="relative z-10 bg-black/90 backdrop-blur-md border-t border-bark-blue/40 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="footer-logo-container group mb-6 md:mb-0" data-nav="home">
+                    <img id="footerLogo" class="footer-logo-img" src="https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/images/bark%20logo.png" alt="$BARK Logo">
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-bark-blue to-bark-purple">BARK</span>
+                </div>
+                <div class="flex space-x-6">
+                    <!-- Twitter (X) -->
+                    <a href="https://x.com/barkdogmeme?s=11" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-twitter social-icon"></i>
+                    </a>
+                    <!-- Telegram -->
+                    <a href="https://t.me/BarkALotTokenn" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-telegram-plane social-icon"></i>
+                    </a>
+                    <!-- Facebook (NEW) -->
+                    <a href="https://www.facebook.com/profile.php?id=61590204608043" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-facebook-f social-icon"></i>
+                    </a>
+                    <!-- TikTok (NEW) -->
+                    <a href="https://tiktok.com/@barkmediaa" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-bark-blue transition-all duration-300 transform hover:scale-110 inline-block">
+                        <i class="fab fa-tiktok social-icon"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-bark-blue/30 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 $BARK. All rights reserved. Disclaimer: $BARK is a meme coin with no intrinsic value or expectation of financial return.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Copy contract address
@@ -218,29 +248,23 @@
         
         (function() {
             // WHITEPAPER FIX - Using Google Docs Viewer for reliable in-browser viewing without download
-            // This displays PDF directly in browser without forcing download
             const WHITEPAPER_RAW = 'https://raw.githubusercontent.com/daycomputertechnologies-arch/bark-website/main/assets/documents/%24BARK%20-%20THE%20WHITEPAPER%20.pdf';
-            // Using Google Docs embedded viewer - displays PDF in browser, no download required
             const PDF_VIEWER_URL = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(WHITEPAPER_RAW)}`;
             
             const modal = document.getElementById('pdfModal');
             const pdfFrame = document.getElementById('pdfFrame');
             const closeBtn = document.querySelector('.close-modal');
             
-            // Open PDF in modal (embedded viewer - NO DOWNLOAD)
             function openPdfViewer() {
-                // Set iframe source to Google Docs viewer which displays PDF inline
                 pdfFrame.src = PDF_VIEWER_URL;
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
                 showToast('📄 Loading Whitepaper... Please wait.');
                 
-                // Handle potential iframe load error
                 pdfFrame.onload = function() {
                     console.log('PDF viewer loaded');
                 };
                 pdfFrame.onerror = function() {
-                    // Fallback: try direct PDF if viewer fails
                     showToast('⚠️ Using direct PDF view...', true);
                     pdfFrame.src = WHITEPAPER_RAW;
                 };
@@ -256,7 +280,6 @@
             window.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
             document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.style.display === 'block') closeModal(); });
             
-            // Attach to all whitepaper buttons (nav and bottom CTA)
             const whitepaperTriggers = document.querySelectorAll('[data-nav="whitepaper"]');
             whitepaperTriggers.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -265,7 +288,6 @@
                 });
             });
             
-            // Also handle "Read Whitepaper" buttons explicitly
             document.querySelectorAll('.read-whitepaper-btn').forEach(btn => {
                 if(!btn.hasAttribute('data-nav')) {
                     btn.addEventListener('click', (e) => {
@@ -275,7 +297,6 @@
                 }
             });
             
-            // Navigation scroll & logo
             const nav = document.getElementById('mainNav');
             window.addEventListener('scroll', () => { if(window.scrollY > 20) nav.classList.add('nav-scrolled'); else nav.classList.remove('nav-scrolled'); });
             
@@ -283,7 +304,6 @@
             const navLogo = document.getElementById('navLogo'); if(navLogo) navLogo.src = LOGO_PATH;
             const footerLogo = document.getElementById('footerLogo'); if(footerLogo) footerLogo.src = LOGO_PATH;
             
-            // Section scrolling for other nav items
             document.querySelectorAll('[data-nav]').forEach(btn => {
                 const targetId = btn.getAttribute('data-nav');
                 if(targetId && targetId !== 'whitepaper') {
@@ -298,7 +318,6 @@
                 }
             });
             
-            // Active section highlight
             const sections = ['home', 'tokenomics', 'roadmap', 'team', 'buy'];
             const navLinks = document.querySelectorAll('.nav-link-item');
             function updateActiveSection() {
