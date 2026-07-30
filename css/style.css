@@ -54,9 +54,25 @@ section {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+.hero {
+    background-color: rgba(0, 0, 0, 0.55);
+    color: white;
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-bottom: 3px solid #555;
+}
+
 section h2 {
     color: #333;
     margin-bottom: 1rem;
+}
+
+.hero h2 {
+    color: white;
 }
 
 footer {
